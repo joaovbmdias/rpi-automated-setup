@@ -23,3 +23,6 @@ sudo apt install openssh-server
 grep -qxF "AllowUsers $new_user" /etc/ssh/sshd_config || echo "AllowUsers $new_user" >> /etc/ssh/sshd_config
 grep -qxF "DenyUsers $default_user" /etc/ssh/sshd_config || echo "DenyUsers $default_user" >> /etc/ssh/sshd_config
 sudo systemctl restart ssh
+
+# change default user password
+sudo passwd

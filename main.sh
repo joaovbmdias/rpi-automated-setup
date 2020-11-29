@@ -26,3 +26,11 @@ sudo systemctl restart ssh
 
 # change default user password
 sudo passwd
+
+# forcing password at every sudo command
+sudo sed -i 's/NOPASSWD/PASSWD/' /etc/sudoers.d/010_pi-nopasswd
+
+# disable login without keypair
+# #ChallengeResponseAuthentication no
+# #PasswordAuthentication no
+# #UsePAM no

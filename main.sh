@@ -17,3 +17,9 @@ sudo sed -i "s/raspberrypi/$new_hostname/" /etc/hostname
 # create new user
 sudo adduser "$new_user"
 sudo usermod -a -G adm,dialout,cdrom,sudo,audio,video,plugdev,games,users,input,netdev,gpio,i2c,spi "$new_user"
+
+# restrict ssh to new user
+sudo apt install openssh-server
+grep -qxF "AllowUsers $new_user" /etc/ssh/sshd_config || echo "AllowUsers $new_user" >> /etc/ssh/sshd_config
+grep -qxF "DenyUsers $default_user" /etc/ssh/sshd_config || echo "DenyUsers $default_user" >> /etc/ssh/sshd_config
+sudo systemctl restart ssh

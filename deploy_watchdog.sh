@@ -19,12 +19,11 @@ chmod +x /etc/.watchdog.sh
 echo SUCCESS!
 
 echo Add watchdog to cron
-cat > create_cron.txt << EOF
-@reboot /etc/.watchdog.sh
-EOF
+crontab -l > create_cron.txt
 
-crontab -l | cat - create_cron.txt >crontab.txt && crontab crontab.txt
+grep -qxF "@reboot /etc/.watchdog.sh" create_cron.txt || echo "@reboot /etc/.watchdog.sh" >> create_cron.txt
+
+crontab create_cron.txt
 
 rm create_cron.txt
-rm crontab.txt
 echo SUCCESS!

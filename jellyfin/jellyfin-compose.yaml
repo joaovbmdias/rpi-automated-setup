@@ -1,0 +1,28 @@
+jellyfin:
+    image: ghcr.io/linuxserver/jellyfin
+    hostname: ${HOSTNAME}
+    ports:
+      - 8096:8096
+      - 8920:8920
+    container_name: jellyfin
+    environment:
+      - PGID=${PGID}
+      - PUID=${PUID}
+      - TZ=Europe/London
+    logging:
+      driver: json-file
+      options:
+        max-file: ${DOCKERLOGGING_MAXFILE}
+        max-size: ${DOCKERLOGGING_MAXSIZE}
+    restart: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DOCKERCONFDIR}/jellyfin:/config
+      - ${DOCKERSHAREDDIR}:/shared
+      - ${DOCKERSTORAGEDIR}:/storage
+      - ${JELLYFIN_TRANSCODEDIR}:/transcode
+      - ${MEDIADIR_MOVIES}:/data/movies
+      - ${MEDIADIR_MUSIC}:/data/music
+      - ${MEDIADIR_MUSIC}:/music
+      - ${MEDIADIR_TV}:/data/tvshows
+      - ${MEDIADIR_TV}:/tv
